@@ -1,0 +1,10 @@
+server:
+  port: 8020
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.61.100:8848
+        file-extension: yaml

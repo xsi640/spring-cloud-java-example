@@ -1,0 +1,10 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: test-server
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.61.100:8848
+        file-extension: yaml

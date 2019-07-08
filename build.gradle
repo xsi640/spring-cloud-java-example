@@ -1,0 +1,56 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.6.RELEASE'
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    ext.vers = [
+            "springCloud": "Greenwich.RELEASE",
+            "springBoot" : "2.1.6.RELEASE",
+            "nacos"      : "0.9.0.RELEASE",
+            "lombok"     : "1.18.8"
+    ]
+
+    bootJar {
+        enabled = false
+    }
+
+    group = "com.suyang"
+    version = "0.0.1-SNAPSHOT"
+    java.sourceCompatibility = JavaVersion.VERSION_1_8
+    java.targetCompatibility = JavaVersion.VERSION_1_8
+
+    repositories {
+        mavenLocal()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        compileOnly "org.projectlombok:lombok:$vers.lombok"
+        annotationProcessor "org.projectlombok:lombok:$vers.lombok"
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Greenwich.RELEASE'
+        }
+    }
+}
+
+subprojects {
+
+    dependencies {
+        implementation "org.springframework.cloud:spring-cloud-starter-sleuth"
+        implementation "org.springframework.cloud:spring-cloud-sleuth-zipkin"
+        implementation "org.springframework.cloud:spring-cloud-starter"
+
+        implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+        implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml"
+        implementation "org.projectlombok:lombok:$vers.lombok"
+    }
+}

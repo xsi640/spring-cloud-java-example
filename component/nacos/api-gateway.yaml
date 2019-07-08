@@ -1,0 +1,39 @@
+# data id: api-gateway.yaml
+spring:
+  zipkin:
+    base-url: http://192.168.61.100:9411
+    discoveryClientEnabled: false
+  sleuth:
+    sampler:
+      probability: 1.0 # 采样率，模式0.1，也就是10%，为了便于观察效果，改为1.0，也就是100%。生产环境建议保持默认。
+  redis:
+    host: 192.168.61.100
+    password: #redis 密码
+    port: 6379
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.61.100:8848
+    gateway:
+      routes:
+        - id: test-client
+          uri: lb://test-client
+          predicates:
+            - Path=/api/v1/test-client/**
+          #            - Host=**.foo.org  # 匹配host地址
+          #            - Method=GET       # 匹配请求方式
+          #            - Header=X-Request-Id, \d+   # 匹配header, 参数1-header key， 参数2-匹配的正则表达式
+          #            - Query=foo, ba.             # 匹配查询条件，参数1-request.param参数, 参数2-正则匹配条件
+          #            - Cookie=chocolate, ch.p     # 匹配cookie， 参数1- cookie name，参数2-正则匹配条件
+          #            - After=2018-01-20T06:06:06+08:00[Asia/Shanghai]   # 匹配日期 这里请求时间在 2018年1月20日6点6分6秒之后的所有请求
+          filters:
+            #            - StripPrefix=1   #截取路径的个数，这里/api/users/xxx -> /users/xxx
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10    # 允许用户每秒处理多少个请求
+                redis-rate-limiter.burstCapacity: 20    # 令牌桶的容量，允许在一秒钟内完成的最大请求数
+                key-resolver: "#{@ipKeyResolver}"       # 使用 SpEL 按名称引用 bean，这里使用根据ip地址限流
+            - name: Retry
+              args:
+                retries: 3              # 重试次数
+                statuses: BAD_GATEWAY   # BAD_GATEWAY的时候进行重试 org.springframework.http.HttpStatus
