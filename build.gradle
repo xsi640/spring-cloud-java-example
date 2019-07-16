@@ -8,10 +8,11 @@ allprojects {
     apply plugin: 'io.spring.dependency-management'
 
     ext.vers = [
-            "springCloud": "Greenwich.RELEASE",
-            "springBoot" : "2.1.6.RELEASE",
-            "nacos"      : "0.9.0.RELEASE",
-            "lombok"     : "1.18.8"
+            "spring_cloud": "Greenwich.RELEASE",
+            "spring_boot" : "2.1.6.RELEASE",
+            "alibaba"     : "0.9.0.RELEASE",
+            "lombok"      : "1.18.8",
+            "apollo"      : "1.4.0"
     ]
 
     bootJar {
@@ -37,7 +38,8 @@ allprojects {
 
     dependencyManagement {
         imports {
-            mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Greenwich.RELEASE'
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:$vers.spring_cloud"
+            mavenBom "org.springframework.cloud:spring-cloud-alibaba-dependencies:$vers.alibaba"
         }
     }
 }

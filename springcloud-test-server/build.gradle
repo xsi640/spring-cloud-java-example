@@ -3,7 +3,9 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation "com.h2database:h2"
 
-    implementation "org.springframework.cloud:spring-cloud-starter-alibaba-sentinel:$vers.nacos"
-    implementation "org.springframework.cloud:spring-cloud-starter-alibaba-nacos-config:$vers.nacos"
-    implementation "org.springframework.cloud:spring-cloud-starter-alibaba-nacos-discovery:$vers.nacos"
+    implementation "com.ctrip.framework.apollo:apollo-client:$vers.apollo"
+    implementation "org.springframework.cloud:spring-cloud-starter-alibaba-nacos-discovery"
+
+    implementation "org.springframework.cloud:spring-cloud-starter-alibaba-sentinel"
+    implementation "com.alibaba.csp:sentinel-datasource-nacos"
 }

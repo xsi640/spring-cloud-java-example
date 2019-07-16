@@ -3,8 +3,18 @@ server:
 spring:
   application:
     name: test-client
-  cloud:
-    nacos:
-      config:
-        server-addr: 192.168.61.100:8848
-        file-extension: yaml
+#  cloud:
+#    nacos:
+#      config:
+#        server-addr: 192.168.61.100:8848
+#        file-extension: yaml
+app:
+  id: ${spring.application.name}
+apollo:
+  meta: http://192.168.61.100:8071
+  #cluster:
+  #cacheDir
+  bootstrap:
+    enabled: true
+    namespaces: application,dev.cloud
+env: DEV

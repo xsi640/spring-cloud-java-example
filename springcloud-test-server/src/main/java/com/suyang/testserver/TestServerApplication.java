@@ -1,14 +1,24 @@
 package com.suyang.testserver;
 
+import com.ctrip.framework.apollo.model.ConfigChange;
+import com.ctrip.framework.apollo.model.ConfigChangeEvent;
+import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
+import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import com.suyang.testserver.domain.User;
 import com.suyang.testserver.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+@EnableApolloConfig
 @SpringBootApplication
 public class TestServerApplication {
+    private static final Logger logger = LoggerFactory.getLogger(TestServerApplication.class);
+
+
     public static void main(String[] args) {
         SpringApplication.run(TestServerApplication.class, args);
     }
